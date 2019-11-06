@@ -1,36 +1,49 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace DotNetSnake
 {
 	class Program
 	{
-		private static int size = 4;
-
+		private static int size = 8;
+		
 		static void Main(string[] args)
 		{
-			Display();
+			var q = new Queue<int>();
+
+			q.Enqueue(1);
+			q.Enqueue(2);
+			q.Enqueue(3);
+
+			Display(q);
+
+			char c = Console.ReadKey().KeyChar;
+
+			;
+
+
 		}
 
-		private static void Display()
+		private static void Display(Queue<int> queue)
 		{
+			char[] array = new char[size * size];
+
+			foreach (int i in queue)
+				array[i] = 'x';
+
 			var sb = new StringBuilder();
 
-			for (int i = 0; i < 9; i++)
-				sb.Append(i);
-			int j = 0;
-			while (j < 9)
+			for (int i = 0; i < size; i++)
 			{
-				sb.Append(j);
-				++j;
+				sb.Append('[');
+				for (int j = 0; j < size; j++)
+				{
+					sb.Append(array[i + j * size])
+					  .Append(' ');
+				}
+				sb.AppendLine("]");
 			}
-
-			int k = 0;
-			do
-			{
-				sb.Append(k);
-				++k;
-			} while (k < 9);
 
 			Console.WriteLine(sb);
 		}
