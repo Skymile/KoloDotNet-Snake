@@ -4,6 +4,11 @@ using System.Text;
 
 namespace DotNetSnake
 {
+	public enum DirectionType
+	{
+		Left, Right, Up, Down
+	}
+
 	class Grid
 	{
 		public Grid(int size)
@@ -16,6 +21,27 @@ namespace DotNetSnake
 			this.snake.Enqueue(3);
 		}
 
+		private static void ChangeDirection(ref DirectionType direction)
+		{
+			if (direction == DirectionType.)
+		}
+
+		private static readonly Dictionary<char, DirectionType> keyToDirection = new Dictionary<char, DirectionType>
+		{
+			{ 'W', DirectionType.Up    },
+			{ 'S', DirectionType.Down  },
+			{ 'A', DirectionType.Left  },
+			{ 'D', DirectionType.Right },
+		};
+
+		private static readonly Dictionary<char, DirectionType> keyToReverseDirection = new Dictionary<char, DirectionType>
+		{
+			{ 'W', DirectionType.Down  },
+			{ 'S', DirectionType.Up    },
+			{ 'A', DirectionType.Right },
+			{ 'D', DirectionType.Left  },
+		};
+
 		public void Step()
 		{
 			char c = char.ToUpper(Console.ReadKey().KeyChar);
@@ -23,11 +49,18 @@ namespace DotNetSnake
 			switch (c)
 			{
 				case 'W':
+					if (this.direction == DirectionType.Down)
+						break;
+					this.direction = DirectionType.Up;
 					this.snake.Dequeue();
-					this.snake.Enqueue(4);
+					this.snake.Enqueue(--this.head);
 					break;
 				case 'S':
-
+					if (this.direction == DirectionType.Up)
+						break;
+					this.direction = DirectionType.Down;
+					this.snake.Dequeue();
+					this.snake.Enqueue(++this.head);
 					break;
 				case 'A':
 
@@ -58,12 +91,15 @@ namespace DotNetSnake
 				sb.AppendLine("]");
 			}
 
+			Console.Clear();
 			Console.WriteLine(sb);
 		}
 
 		public int Size { get; }
+		private int head = 3;
 
 		private readonly Queue<int> snake;
+		private DirectionType direction = DirectionType.Down;
 	}
 
 	class Program
@@ -72,11 +108,16 @@ namespace DotNetSnake
 		{
 			var grid = new Grid(8);
 
-			grid.Display();
+			while (true)
+			{
+				grid.Display();
+				grid.Step();
+			}
 
-
-
-			grid.Display();
-		}
+			Console.ReadLine();
+		} 
 	}
 }
+// 01234567
+//  123    
+//   234  
