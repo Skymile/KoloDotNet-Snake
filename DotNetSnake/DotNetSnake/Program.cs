@@ -21,10 +21,11 @@ namespace DotNetSnake
 			this.snake.Enqueue(3);
 		}
 
-		private static void ChangeDirection(ref DirectionType direction)
-		{
-			if (direction == DirectionType.)
-		}
+		private static DirectionType ChangeDirection(
+			DirectionType direction, 
+			DirectionType reverse, 
+			DirectionType newDirection
+		) => direction == reverse ? direction : newDirection;
 
 		private static readonly Dictionary<char, DirectionType> keyToDirection = new Dictionary<char, DirectionType>
 		{
@@ -46,28 +47,27 @@ namespace DotNetSnake
 		{
 			char c = char.ToUpper(Console.ReadKey().KeyChar);
 
-			switch (c)
+			if (keyToDirection.TryGetValue(c, out var dir) &&
+				keyToReverseDirection.TryGetValue(c, out var rev))
 			{
-				case 'W':
-					if (this.direction == DirectionType.Down)
+				this.direction = ChangeDirection(this.direction, dir, rev);
+				switch (c)
+				{
+					case 'W':
+						this.snake.Dequeue();
+						this.snake.Enqueue(--this.head);
 						break;
-					this.direction = DirectionType.Up;
-					this.snake.Dequeue();
-					this.snake.Enqueue(--this.head);
-					break;
-				case 'S':
-					if (this.direction == DirectionType.Up)
+					case 'S':
+						this.snake.Dequeue();
+						this.snake.Enqueue(++this.head);
 						break;
-					this.direction = DirectionType.Down;
-					this.snake.Dequeue();
-					this.snake.Enqueue(++this.head);
-					break;
-				case 'A':
+					case 'A':
 
-					break;
-				case 'D':
+						break;
+					case 'D':
 
-					break;
+						break;
+				}
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace DotNetSnake
 			}
 
 			Console.ReadLine();
-		} 
+		}
 	}
 }
 // 01234567
