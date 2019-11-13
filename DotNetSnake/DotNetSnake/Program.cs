@@ -51,23 +51,29 @@ namespace DotNetSnake
 				keyToReverseDirection.TryGetValue(c, out var rev))
 			{
 				this.direction = ChangeDirection(this.direction, dir, rev);
+				this.snake.Dequeue();
 				switch (c)
 				{
 					case 'W':
-						this.snake.Dequeue();
-						this.snake.Enqueue(--this.head);
+						if (this.head % Size == 0)
+							this.head += Size;
+						--this.head;
 						break;
 					case 'S':
-						this.snake.Dequeue();
-						this.snake.Enqueue(++this.head);
+						++this.head;
+						if (this.head % Size == 0)
+							this.head -= Size;
 						break;
 					case 'A':
-
+						this.head -= this.Size;
+						if (this.head < 0)
+							this.head += this.Size;	
 						break;
 					case 'D':
-
+						this.head += this.Size;
 						break;
 				}
+				this.snake.Enqueue(this.head);
 			}
 		}
 
