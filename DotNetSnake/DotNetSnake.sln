@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetSnake", "DotNetSnake\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTest", "DotNetTest\DotNetTest.csproj", "{5E28E90D-49FD-41C6-8B2B-BDDEC260E35D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestProject1", "NUnitTestProject1\NUnitTestProject1.csproj", "{F57C5576-0507-4735-8343-5F58D7008313}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5E28E90D-49FD-41C6-8B2B-BDDEC260E35D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E28E90D-49FD-41C6-8B2B-BDDEC260E35D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E28E90D-49FD-41C6-8B2B-BDDEC260E35D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57C5576-0507-4735-8343-5F58D7008313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57C5576-0507-4735-8343-5F58D7008313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57C5576-0507-4735-8343-5F58D7008313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57C5576-0507-4735-8343-5F58D7008313}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
