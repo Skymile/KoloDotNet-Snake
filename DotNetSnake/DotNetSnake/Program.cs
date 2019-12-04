@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
+// Menu
+// Punkty
+// Czas
+// Wątki
+// Edytor map
+// Większe mapy
+// WPF/Unity 2D/Avalonia/Winforms/GTK#
+// 3D (Unity 3D)
+
 namespace DotNetSnake
 {
 	public enum DirectionType
@@ -126,7 +135,8 @@ namespace DotNetSnake
 			while (true)
 			{
 				int value = rnd.Next(0, cap);
-				if (!this.snake.Contains(value))
+				if (!this.snake.Contains(value) && 
+					!this.walls.Contains(value))
 				{
 					this.apple = value;
 					return;
