@@ -63,10 +63,11 @@ namespace DotNetSnake
 					case DirectionType.Left:
 						this.head -= this.Size;
 						if (this.head < 0)
-							this.head += this.Size;	
+							this.head += this.Size * this.Size;	
 						break;
 					case DirectionType.Right:
 						this.head += this.Size;
+						this.head %= this.Size * this.Size;
 						break;
 				}
 				this.snake.Enqueue(this.head);
