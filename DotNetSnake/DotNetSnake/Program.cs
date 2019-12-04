@@ -21,12 +21,6 @@ namespace DotNetSnake
 			this.snake.Enqueue(3);
 		}
 
-		private static DirectionType ChangeDirection(
-			DirectionType direction, 
-			DirectionType reverse, 
-			DirectionType newDirection
-		) => direction == reverse ? direction : newDirection;
-
 		private static readonly Dictionary<char, DirectionType> keyToDirection = new Dictionary<char, DirectionType>
 		{
 			{ 'W', DirectionType.Up    },
@@ -45,31 +39,33 @@ namespace DotNetSnake
 
 		public void Step()
 		{
-			char c = char.ToUpper(Console.ReadKey().KeyChar);
-
+		    char c = char.ToUpper(Console.ReadKey().KeyChar);
+			
 			if (keyToDirection.TryGetValue(c, out var dir) &&
 				keyToReverseDirection.TryGetValue(c, out var rev))
 			{
-				this.direction = ChangeDirection(this.direction, dir, rev);
 				this.snake.Dequeue();
-				switch (c)
+				if (this.direction != rev)
+					this.direction = dir;
+
+				switch (this.direction)
 				{
-					case 'W':
-						if (this.head % Size == 0)
-							this.head += Size;
+					case DirectionType.Up:
+						if (this.head % this.Size == 0)
+							this.head += this.Size;
 						--this.head;
 						break;
-					case 'S':
+					case DirectionType.Down:
 						++this.head;
-						if (this.head % Size == 0)
-							this.head -= Size;
+						if (this.head % this.Size == 0)
+							this.head -= this.Size;
 						break;
-					case 'A':
+					case DirectionType.Left:
 						this.head -= this.Size;
 						if (this.head < 0)
 							this.head += this.Size;	
 						break;
-					case 'D':
+					case DirectionType.Right:
 						this.head += this.Size;
 						break;
 				}
