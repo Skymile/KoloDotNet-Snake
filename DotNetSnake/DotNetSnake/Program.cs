@@ -39,7 +39,7 @@ namespace DotNetSnake
 			{ 'D', DirectionType.Left  },
 		};
 
-		public void Step()
+		public bool Step()
 		{
 		    char c = char.ToUpper(Console.ReadKey().KeyChar);
 			
@@ -50,37 +50,44 @@ namespace DotNetSnake
 				if (this.direction != rev)
 					this.direction = dir;
 
+				int nextHead = this.head;
 				switch (this.direction)
 				{
 					case DirectionType.Up:
-						if (this.head % this.Size == 0)
-							this.head += this.Size;
-						--this.head;
+						if (nextHead % this.Size == 0)
+							nextHead += this.Size;
+						--nextHead;
 						break;
 					case DirectionType.Down:
-						++this.head;
-						if (this.head % this.Size == 0)
-							this.head -= this.Size;
+						++nextHead;
+						if (nextHead % this.Size == 0)
+							nextHead -= this.Size;
 						break;
 					case DirectionType.Left:
-						this.head -= this.Size;
-						if (this.head < 0)
-							this.head += this.Size * this.Size;	
+						nextHead -= this.Size;
+						if (nextHead < 0)
+							nextHead += this.Size * this.Size;	
 						break;
 					case DirectionType.Right:
-						this.head += this.Size;
-						this.head %= this.Size * this.Size;
+						nextHead += this.Size;
+						nextHead %= this.Size * this.Size;
 						break;
 				}
+
+				if (this.snake.Contains(nextHead))
+					return false;
+				this.head = nextHead;
 				
 				if (this.head == this.apple)
 				{
 					this.snake.Enqueue(this.head);
 					SetApple();
 				}
-				
+
 				this.snake.Enqueue(this.head);
 			}
+
+			return true;
 		}
 
 		public void Display()
@@ -141,9 +148,11 @@ namespace DotNetSnake
 			while (true)
 			{
 				grid.Display();
-				grid.Step();
+				if (!grid.Step())
+					break;
 			}
 
+			Console.WriteLine("Koniec");
 			Console.ReadLine();
 		}
 	}
