@@ -74,7 +74,8 @@ namespace DotNetSnake
 						break;
 				}
 
-				if (this.snake.Contains(nextHead))
+				if (this.snake.Contains(nextHead) || 
+					this.walls.Contains(nextHead))
 					return false;
 				this.head = nextHead;
 				
@@ -97,6 +98,8 @@ namespace DotNetSnake
 			foreach (int i in this.snake)
 				array[i] = 'x';
 			array[this.apple] = '&';
+			foreach (int i in this.walls)
+				array[i] = '#';
 
 			var sb = new StringBuilder();
 
@@ -136,6 +139,11 @@ namespace DotNetSnake
 		private int apple = -1;
 
 		private readonly Queue<int> snake;
+		private readonly List<int> walls = new List<int>
+		{
+			32, 33, 34, 35, 36, 39
+		};
+
 		private DirectionType direction = DirectionType.Down;
 	}
 
