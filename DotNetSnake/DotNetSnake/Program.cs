@@ -19,6 +19,8 @@ namespace DotNetSnake
 			this.snake.Enqueue(1);
 			this.snake.Enqueue(2);
 			this.snake.Enqueue(3);
+
+			SetApple();
 		}
 
 		private static readonly Dictionary<char, DirectionType> keyToDirection = new Dictionary<char, DirectionType>
@@ -70,6 +72,13 @@ namespace DotNetSnake
 						this.head %= this.Size * this.Size;
 						break;
 				}
+				
+				if (this.head == this.apple)
+				{
+					this.snake.Enqueue(this.head);
+					SetApple();
+				}
+				
 				this.snake.Enqueue(this.head);
 			}
 		}
@@ -80,6 +89,7 @@ namespace DotNetSnake
 
 			foreach (int i in this.snake)
 				array[i] = 'x';
+			array[this.apple] = '&';
 
 			var sb = new StringBuilder();
 
@@ -98,8 +108,25 @@ namespace DotNetSnake
 			Console.WriteLine(sb);
 		}
 
+		private void SetApple()
+		{
+			var rnd = new Random();
+			int cap = this.Size * this.Size;
+
+			while (true)
+			{
+				int value = rnd.Next(0, cap);
+				if (!this.snake.Contains(value))
+				{
+					this.apple = value;
+					return;
+				}
+			}
+		}
+
 		public int Size { get; }
 		private int head = 3;
+		private int apple = -1;
 
 		private readonly Queue<int> snake;
 		private DirectionType direction = DirectionType.Down;
