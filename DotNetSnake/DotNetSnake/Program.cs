@@ -15,7 +15,11 @@ namespace DotNetSnake
 	{
 		static void Main()
 		{
+			// Zaczynamy program od tego miejsca
+
 			var grid = new Grid(8);
+			// Tworzymy nową instancje klasy grid, zatem wywoływany 
+			// jest jej konstruktor Grid(int size)
 
 			while (true)
 			{
