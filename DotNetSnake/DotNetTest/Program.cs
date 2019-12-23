@@ -38,6 +38,7 @@ using System.Linq;
 // a.Where()
 //   .Select()
 //
+
 namespace DotNetTest
 {
 	public class UnitTestSample
@@ -84,7 +85,7 @@ namespace DotNetTest
 			}
 		}
 
-		static void Main(string[] args)
+		static void EnumerableTest()
 		{
 			var eeee = new EnumerableImpl();
 
@@ -93,12 +94,19 @@ namespace DotNetTest
 				;
 			}
 
-
 			foreach (var i in eeee)
 			{
 
 			}
 
+			foreach (var item in new List<int>())
+			{
+
+			}
+		}
+
+		static void ReaderTest()
+		{
 			using (var reader = new StreamReader("aa.txt"))
 			{
 				reader.ReadLine();
@@ -107,19 +115,19 @@ namespace DotNetTest
 			using (var writer = new StreamWriter("aa.txt"))
 				writer.WriteLine("aa");
 			File.WriteAllText("aa.txt", "asdsadasda");
+		}
 
-			foreach (var item in new List<int>())
-			{
-
-			}
-
-			return;
+		static void DisposableTest()
+		{
 			using var test1 = new MyClass();
 			using (var test = new MyClass())
 			{
 
 			}
-			return;
+		}
+
+		static void BenchmarkingTest()
+		{
 			const int Size = 1_000;
 
 			var list = new Dictionary<int, string>();
@@ -138,13 +146,16 @@ namespace DotNetTest
 
 			var sw2 = Stopwatch.StartNew();
 			for (int i = 0; i < Size; i++)
-				if (array.Contains((i, i.ToString())))	
+				if (array.Contains((i, i.ToString())))
 					;
 			sw2.Stop();
 
-			Console.WriteLine(
-$"{sw1.ElapsedTicks} {sw2.ElapsedTicks}"
-);
+			Console.WriteLine($"{sw1.ElapsedTicks} {sw2.ElapsedTicks}");
+		}
+
+		static void Main(string[] args)
+		{
+			BenchmarkingTest();
 			Console.WriteLine("Hello World!");
 		}
 	}
