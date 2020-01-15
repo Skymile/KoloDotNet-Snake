@@ -79,9 +79,23 @@ namespace Functional
 				new BookAuthor { AuthorId = 2, BookId = 17 },
 				new BookAuthor { AuthorId = 2, BookId = 19 },
 			};
+/*
+SELECT i.Name 
+FROM Authors
+JOIN bookAuthors link ON i.Id = link.AuthorId
+JOIN books book ON book.Id = link.AuthorId
+WHERE i.Id = 1
+*/
+var list =
+	from i in authors
+	where i.Id == 1
+	join link in bookAuthors on i.Id equals link.AuthorId
+	join book in books on link.BookId equals book.Id
+	select book.Title
+	;
 
-
-
+			foreach (var i in list)
+				Console.WriteLine(i);
 			Console.ReadLine();
 		}
 	}
