@@ -47,11 +47,11 @@ namespace Functional
 		public int BookId   { get; set; }
 	}
 
-
 	class Program
 	{
 		static void Main(string[] args)
 		{
+
 			Author[] authors =
 			{
 				new Author { Id = 1, Name = "Author1" },
@@ -79,23 +79,24 @@ namespace Functional
 				new BookAuthor { AuthorId = 2, BookId = 17 },
 				new BookAuthor { AuthorId = 2, BookId = 19 },
 			};
-/*
-SELECT i.Name 
-FROM Authors
-JOIN bookAuthors link ON i.Id = link.AuthorId
-JOIN books book ON book.Id = link.AuthorId
-WHERE i.Id = 1
-*/
-var list =
+			/*
+			SELECT i.Name 
+			FROM Authors
+			JOIN bookAuthors link ON i.Id = link.AuthorId
+			JOIN books book ON book.Id = link.AuthorId
+			WHERE i.Id = 1
+			*/
+var listQuery = (
 	from i in authors
 	where i.Id == 1
 	join link in bookAuthors on i.Id equals link.AuthorId
 	join book in books on link.BookId equals book.Id
-	select book.Title
-	;
+	orderby i.Name
+	group book by i.Name 
+).ToDictionary(i => i.Key, i => i.ToArray());
 
 			foreach (var i in list)
-				Console.WriteLine(i);
+				Console.WriteLine(i.Key);
 			Console.ReadLine();
 		}
 	}
